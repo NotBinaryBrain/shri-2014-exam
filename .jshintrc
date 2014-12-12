@@ -1,0 +1,23 @@
+{
+    "node": true,
+    "laxcomma": true,
+    "laxbreak"  : true,
+    "latedef": false,
+    "quotmark": true,
+    "undef": false,
+    "unused": true,
+    "trailing": true,
+    "asi": true,
+    "maxlen": 120,
+    "indent": 2,
+    "globals": {
+        "$": true,
+        "_": true,
+        "document": true,
+        "io": true,
+        "window": true,
+        "CodeMirror": true,
+        "WebSocket": true,
+        "Switchery": true
+    }
+}

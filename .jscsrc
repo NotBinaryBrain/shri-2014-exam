@@ -1,0 +1,24 @@
+{
+  "excludeFiles": ["node_modules/**", "public/**"],
+  "maximumLineLength": 120,
+  "validateIndentation": 4,
+  "requireSpaceAfterKeywords": true,
+  "requireSpaceBeforeBlockStatements": true,
+  "requireSpacesInConditionalExpression": {
+    "afterTest": true,
+    "beforeConsequent": true,
+    "afterConsequent": true,
+    "beforeAlternate": true
+  },
+  "requireSpacesInFunctionExpression": {
+    "beforeOpeningRoundBrace": true,
+    "beforeOpeningCurlyBrace": true
+  },
+  "requireSpacesInAnonymousFunctionExpression": {
+    "beforeOpeningRoundBrace": true,
+    "beforeOpeningCurlyBrace": true
+  },
+  "disallowSpacesInCallExpression": true,
+  "disallowTrailingWhitespace": true,
+  "requireCamelCaseOrUpperCaseIdentifiers": "ignoreProperties"
+}

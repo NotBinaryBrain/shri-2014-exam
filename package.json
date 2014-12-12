@@ -1,0 +1,33 @@
+{
+  "name": "team3-weather-exam",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yandex-shri-ekb-2014-exam/team3"
+  },
+  "version": "0.0.1",
+  "description": "ya.weather.map",
+  "dependencies": {
+    "express": "*",
+    "gulp": "~3.8.10",
+    "gulp-autoprefixer": "~1.0.1",
+    "gulp-concat": "~2.4.1",
+    "gulp-cssmin": "~0.1.6",
+    "gulp-rename": "~1.2.0",
+    "gulp-rimraf": "~0.1.1",
+    "gulp-uglifyjs": "~0.5.0",
+    "jscs": "~1.7.3",
+    "jshint": "~2.5.8",
+    "precommit-hook": "^1.0.7"
+  },
+  "engine": "node 0.6.x",
+  "precommit": [
+    "lint",
+    "codestyle"
+  ],
+  "scripts": {
+    "lint": "node_modules/.bin/jshint .",
+    "codestyle": "node_modules/.bin/jscs .",
+    "prestart": "node_modules/.bin/gulp",
+    "start": "node server.js"
+  }
+}
