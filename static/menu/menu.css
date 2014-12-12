@@ -1,0 +1,39 @@
+/*! Меню вкладок */
+.menu {
+  padding: 0 24px;
+}
+  .menu__list {
+    display: inline-block;
+    height: 28px;
+    padding: 0;
+    border-radius: 3px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    font-size: 0;
+  }
+    .menu__item {
+      display: inline-block;
+      border-right: 1px solid #ccc!important;
+      border-top: 1px solid transparent!important;
+      border-bottom: 1px solid transparent!important;
+      border-left: 1px solid transparent!important;
+      margin: -1px;
+      -webkit-transition: all .3s ease;
+      transition: all .3s ease;
+      color: #000;
+      font-size: 13px;
+      line-height: 26px;
+    }
+      .menu__item-active, .menu__item:hover {
+        border: 1px solid #dbc794!important;
+        background: #ffeaae;
+      }
+    .menu__item:first-child, .menu__item:last-child {
+      border-radius: 3px;
+    }
+      .menu__link {
+        text-transform: lowercase;
+        text-decoration: none;
+        color: inherit;
+        padding: 0 14px;
+      }

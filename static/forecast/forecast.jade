@@ -1,0 +1,53 @@
+div.forecast.clearfix
+  div.forecast__options
+    span.town__name(data-field='info.nameprep', data-mod='title')
+    div.towns__list(title='Эта штука не работает :(')
+      a.towns__title(href='#') Другой город
+  div.forecast__data.clearfix
+    div.forecast__row
+      div.forecast__item.item-now(data-field='fact.temp', data-mod='bkg')
+        div.temperature.temperature-big(data-field='fact.temp')
+        div.weather
+          img.weather__icon.weather__icon-big(src='', data-field='fact.weather_icon', data-mod='src')
+          span.weather__description(data-field='fact.weather')
+      div.forecast__item.item-day.item-faded(data-field='forecast.0.parts.1.temp', data-mod='bkg')
+        div.temperature(data-field='forecast.0.parts.1.temp')
+        div.weather
+          img.weather__icon(src='', data-field='forecast.0.parts.1.weather_icon', data-mod='src')
+      div.forecast__item.item-evening.item-faded(data-field='forecast.0.parts.2.temp', data-mod='bkg')
+        div.temperature(data-field='forecast.0.parts.2.temp')
+        div.weather
+          img.weather__icon(src='', data-field='forecast.0.parts.2.weather_icon', data-mod='src')
+      div.forecast__item.item-night.item-faded(data-field='forecast.0.parts.3.temp', data-mod='bkg')
+        div.temperature(data-field='forecast.0.parts.3.temp')
+        div.weather
+          img.weather__icon(src='', data-field='forecast.0.parts.3.weather_icon', data-mod='src')
+      ul.forecast__description
+        li
+          span Давление:&nbsp;
+          span(data-field='yesterday.pressure')
+          span &nbsp;мм рт. ст.
+        li
+          span Ветер:&nbsp;
+          span(data-field='yesterday.wind')
+          span ,&nbsp;
+          span(data-field='yesterday.wind_speed')
+          span &nbsp;м/с (
+          span(data-field='yesterday.wind_speed', data-mod='km')
+          span &nbsp;км/ч)
+        li
+          span Влажность:&nbsp;
+          span(data-field='yesterday.humidity')
+          span %
+        li
+          span Восход:&nbsp;
+          span(data-field='forecast.0.sunrise')
+          span &nbsp;Заход:&nbsp;
+          span(data-field='forecast.0.sunset')
+        li
+          span Данные зарегистрированы более получаса назад&nbsp;
+          div.icon-help
+            span.icon-help__popup На основе прогноза
+    div.forecast__row.temperature.gray
+      span вчера&nbsp;
+      span(data-field='yesterday.temp')

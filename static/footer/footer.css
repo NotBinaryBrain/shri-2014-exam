@@ -1,0 +1,29 @@
+/*! Подвал сайта */
+.footer {
+  padding: 17px 24px;
+  border-top: 1px solid rgba(0,0,0,.2);
+}
+  .footer__list {
+    display: table-cell;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .footer__list:last-child {
+    text-align: right;
+  }
+  .footer__list-short {
+    width: 900px;
+  }
+  .footer__list-long {
+    width: 5000px;
+  }
+    .footer__item {
+      font-size: 11px;
+      line-height: 18px;
+      color: #666;
+    }
+    .footer__link {
+      color: #747eaf;
+      text-decoration: inherit;
+    }

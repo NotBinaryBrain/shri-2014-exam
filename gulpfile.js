@@ -1,68 +1,61 @@
-// Paths
-var publicPath = './public/';
-var staticPath = './static/';
-
-// Not production
+/* Not production mode*/
 process.env.production = false;
 
-// Include gulp
-var gulp = require('gulp');
 
-// Include Our Plugins
-var rimraf = require('gulp-rimraf'),
-  concat = require('gulp-concat'),
-  cssmin = require('gulp-cssmin'),
-  rename = require('gulp-rename'),
-  uglify = require('gulp-uglifyjs'),
-  autoprefixer = require('gulp-autoprefixer');
+/* Setting variables */
+var pbPath = './public/',
+    stPath = './static/',
 
-//// Compile Our less
-//gulp.task('styleProcessing', function () {
-//    gulp.src(staticPath + 'modules/m_*/*.less')
-//    .pipe(concat('tmp_styles.less'))
-//    .pipe(gulp.dest(publicPath + 'css'))
-//    .pipe(less())
-//    .pipe(concat('style.min.css'))
-//    .pipe(autoprefixer())
-//    .pipe(cssmin())
-//    .pipe(gulp.dest(publicPath + 'css'))
-//});
-//
-//// Js task
-//gulp.task('scriptProcessing', ['templateCache'], function () {
-//    return gulp.src([
-//        publicPath + 'js/templates.js',
-//        staticPath + 'modules/m_*/*.js'
-//    ])
-//    .pipe(concat('events.js'))
-////    .pipe(uglify())
-//    .pipe(gulp.dest(publicPath + 'js'))
-//});
-//
-//// Move
-//gulp.task('move', ['styleProcessing', 'scriptProcessing'], function () {
-//    gulp.src(staticPath + 'modules/m_*/*.{jpg,png,jpeg,gif}')
-//    .pipe(rename({dirname: ''}))
-//    .pipe(gulp.dest(publicPath + 'img'));
-//
-//    gulp.src(staticPath + 'modules/m_*/*.html')
-//    .pipe(rename({dirname: ''}))
-//    .pipe(gulp.dest(publicPath + 'html'));
-//});
-//
-//// Clear
-//gulp.task('clear', function () {
-//    return gulp.src(publicPath) // much faster
-//    .pipe(rimraf());
-//});
-//
-//// Angular templateCache
-//gulp.task('templateCache', function () {
-//    return gulp.src(staticPath + 'modules/m_*/*.html')
-//    .pipe(templateCache({standalone: true}))
-//    .pipe(uglify())
-//    .pipe(gulp.dest(publicPath + 'js'));
-//});
-//
-//// Default Task
-gulp.task('default', []);//['styleProcessing', 'scriptProcessing', 'move']);
+    gulp   = require('gulp'),
+
+    rimraf = require('gulp-rimraf'),
+    concat = require('gulp-concat'),
+    cssmin = require('gulp-cssmin'),
+    rename = require('gulp-rename'),
+    uglify = require('gulp-uglifyjs'),
+    prefxr = require('gulp-autoprefixer'),
+    jade   = require('gulp-jade');
+
+
+/* Process Jade files */
+gulp.task('jade', function () {
+    gulp.src(stPath + '/**/*.jade')
+        .pipe(jade())
+        .pipe(rename({dirname: ''}))
+        .pipe(gulp.dest(pbPath + 'html'))
+});
+
+/* Concat & process css files */
+gulp.task('style', function () {
+    gulp.src(stPath + '/**/*.css')
+        .pipe(concat('app.css'))
+        .pipe(prefxr())
+        .pipe(cssmin())
+        .pipe(gulp.dest(pbPath + 'css'))
+});
+
+/* Concat & uglify scripts for public */
+gulp.task('script', function () {
+    return gulp.src([
+            stPath + '/**/!(app)*.js',
+            stPath + '/app/app.js' ])
+        .pipe(concat('app.js'))
+        .pipe(uglify())
+        .pipe(gulp.dest(pbPath + 'js'))
+});
+
+/* Moving images to /public */
+gulp.task('move', function () {
+    gulp.src(stPath + '/**/*.{jpg,png,jpeg,gif}')
+        .pipe(rename({dirname: ''}))
+        .pipe(gulp.dest(pbPath + 'img'));
+});
+
+/* Clear public directory */
+gulp.task('clear', function () {
+    return gulp.src(pbPath) // much faster
+        .pipe(rimraf());
+});
+
+// Default Task
+gulp.task('default', ['move', 'style', 'script', 'jade']);

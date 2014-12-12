@@ -1,12 +1,11 @@
-var publicPath = __dirname + '/public',
-    staticPath = __dirname + '/static',
+var pbPath = __dirname + '/public',
     express = require('express'),
     app = express();
 
-app.use(express.static(staticPath));
+app.use(express.static(pbPath));
 
 app.get('/', function (req, res) {
-    res.sendFile(staticPath + '/html/index.html');
+    res.sendFile(pbPath + '/html/app.html');
 });
 
 // Cлушаем сервер на 5400 порту
