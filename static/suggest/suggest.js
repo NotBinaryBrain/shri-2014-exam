@@ -1,4 +1,40 @@
 var SUGGEST = {
+    /** Символы для перевода символа из латинской раскладки в кириллическую */
+    characters: {
+        'Q': 'Й',
+        'W': 'Ц',
+        'E': 'У',
+        'R': 'К',
+        'T': 'Е',
+        'Y': 'Н',
+        'U': 'Г',
+        'I': 'Ш',
+        'O': 'Щ',
+        'P': 'З',
+        '{': 'Х',
+        '}': 'Ъ',
+        '`': 'Ё',
+        'A': 'Ф',
+        'S': 'Ы',
+        'D': 'В',
+        'F': 'А',
+        'G': 'П',
+        'H': 'Р',
+        'J': 'О',
+        'K': 'Л',
+        'L': 'Д',
+        ';': 'Ж',
+        '\'': 'Э',
+        'Z': 'Я',
+        'X': 'Ч',
+        'C': 'С',
+        'V': 'М',
+        'B': 'И',
+        'N': 'Т',
+        'M': 'Ь',
+        ',': 'Б',
+        '.': 'Ю'
+    },
 
     /**
      * Получаем города по началу названия
@@ -41,11 +77,29 @@ var SUGGEST = {
     },
 
     /**
+     * Переводим строку в латинской раскладке в кириллическую
+     * @param nameStart Строка в латинской раскладке
+     * @returns {string} Строка в кириллической раскладке
+     */
+    setCyrillicCharacters: function (nameStart) {
+        nameStart = nameStart.toUpperCase();
+        var result = '';
+
+        for (var i = 0, l = nameStart.length; i < l; i++) {
+            var newCharacter = SUGGEST.characters[nameStart[i]];
+            result += newCharacter ? newCharacter : nameStart[i];
+        }
+
+        return result;
+    },
+
+    /**
      * Инициализация обработчиков событий
      */
     init: function () {
         $('.search .input__control').keyup(function () {
-            SUGGEST.getSuggestedTowns(this.value);
+            var cyrillicName = SUGGEST.setCyrillicCharacters(this.value);
+            SUGGEST.getSuggestedTowns(cyrillicName);
         });
 
         $('.search .input__control').focusout(function () {
