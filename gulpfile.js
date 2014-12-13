@@ -58,4 +58,22 @@ gulp.task('clear', function () {
 });
 
 // Default Task
-gulp.task('default', ['move', 'style', 'script', 'jade']);
+gulp.task('default', function () {
+    gulp.run('move', 'style', 'script', 'jade');
+
+    gulp.watch(stPath + '/**/*.{jpg,png,jpeg,gif}', function () {
+        gulp.run('move');
+    });
+
+    gulp.watch(stPath + '/**/*.js', function () {
+        gulp.run('script');
+    });
+
+    gulp.watch(stPath + '/**/*.jade', function () {
+        gulp.run('jade');
+    });
+
+    gulp.watch(stPath + '/**/*.css', function () {
+        gulp.run('style');
+    });
+});
