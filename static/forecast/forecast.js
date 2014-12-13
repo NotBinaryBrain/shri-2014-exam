@@ -177,11 +177,8 @@ var FORECAST = {
         }
     },
 
-    /**
-     * Инициализация FORECAST
-     */
-    init: function () {
-        /* Скрываем блоки с погодой, которая уже была */
+    /** Скрываем блоки с погодой, которая уже была */
+    hideOlderForecast: function () {
         var hoursNow = (new Date()).getHours();
 
         if (hoursNow >= 12 && hoursNow < 18) {
@@ -194,6 +191,13 @@ var FORECAST = {
             /* Скрываем "ночь" */
             $('.forecast__item.item-night').addClass('hidden');
         }
+    },
+
+    /**
+     * Инициализация FORECAST
+     */
+    init: function () {
+        FORECAST.hideOlderForecast();
 
         /* Инициализируем погодные данные */
         if (window.location.hash.indexOf('geoid') !== -1) {
