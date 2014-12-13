@@ -57,10 +57,8 @@ gulp.task('clear', function () {
         .pipe(rimraf());
 });
 
-// Default Task
-gulp.task('default', function () {
-    gulp.run('move', 'style', 'script', 'jade');
-
+/* Big brother is watching you */
+gulp.task('watchIt', function () {
     gulp.watch(stPath + '/**/*.{jpg,png,jpeg,gif}', function () {
         gulp.run('move');
     });
@@ -77,3 +75,6 @@ gulp.task('default', function () {
         gulp.run('style');
     });
 });
+
+// Default Task
+gulp.task('default', ['move', 'style', 'script', 'jade']);
