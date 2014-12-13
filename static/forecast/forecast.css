@@ -69,6 +69,9 @@
           color: #6d6e6e;
           font-size: 13px;
         }
+          .item-day.hidden {
+            display: none;
+          }
         .item-evening {
           width: 75px;
           min-width: 70px;
@@ -80,6 +83,9 @@
           color: #6d6e6e;
           font-size: 13px;
         }
+          .item-evening.hidden {
+            display: none;
+          }
         .item-night {
           width: 75px;
           min-width: 56px;
@@ -91,6 +97,9 @@
           color: #6d6e6e;
           font-size: 13px;
         }
+          .item-night.hidden {
+            display: none;
+          }
         .item-faded {
           background-image: url(../img/transparentGradientWeatherCell.png);
           background-repeat: repeat-y;

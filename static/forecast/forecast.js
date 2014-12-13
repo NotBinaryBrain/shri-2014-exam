@@ -181,6 +181,21 @@ var FORECAST = {
      * Инициализация FORECAST
      */
     init: function () {
+        /* Скрываем блоки с погодой, которая уже была */
+        var hoursNow = (new Date()).getHours();
+
+        if (hoursNow >= 12 && hoursNow < 18) {
+            /* Скрываем "день" */
+            $('.forecast__item.item-day').addClass('hidden');
+        } else if (hoursNow >= 12 && hoursNow < 18) {
+            /* Скрываем "вечер" */
+            $('.forecast__item.item-evening').addClass('hidden');
+        } else if (hoursNow >= 18 && hoursNow < 1) {
+            /* Скрываем "ночь" */
+            $('.forecast__item.item-night').addClass('hidden');
+        }
+
+        /* Инициализируем погодные данные */
         if (window.location.hash.indexOf('geoid') !== -1) {
             FORECAST.getForecastFromHash();
         } else {
