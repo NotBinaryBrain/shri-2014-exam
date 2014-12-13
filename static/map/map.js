@@ -2,91 +2,6 @@ var MAP = {
     /** Кэш меток */
     apiBoundsCache: {},
 
-    /** Инициализация лэйаутов, карты и кластеризатора */
-    init: function (coords, zoom) {
-        // Инициализируем лэйауты
-        MAP.iContentLayout = ymaps.templateLayoutFactory.createClass(
-            '<div class="baloon ymaps-placemark">' +
-                '<a class="link" href="#">' +
-                '<i class="icon icon_size_30 baloon__icon" data-width="30" style=' +
-                '"background-image: url(\'http://ekb.shri14.ru/icons/$[properties.weather_icon].svg\')">' +
-                '</i>' +
-                '<span class="baloon__temp">$[properties.temp]</span>' +
-                '</a>' +
-                '</div>'
-        );
-
-        MAP.hContentLayout = ymaps.templateLayoutFactory.createClass(
-            '<b class="hint">$[properties.name]</b>', {
-                /* Для того, чтобы хинт плавал над меткой */
-                getShape: function () {
-                    var el = this.getElement(),
-                        result = null;
-                    if (el) {
-                        var firstChild = el.firstChild;
-                        result = new ymaps.shape.Rectangle(
-                            new ymaps.geometry.pixel.Rectangle([
-                                [0, 0],
-                                [firstChild.offsetWidth, firstChild.offsetHeight]
-                            ])
-                        );
-                    }
-                    return result;
-                }
-            }
-        );
-
-        MAP.bContentLayout = ymaps.templateLayoutFactory.createClass(
-            '<div>$[properties.balloon]</div>'
-        );
-
-        // Основные объекты
-        // Инициализация карты
-        MAP.map = new ymaps.Map('map', {
-            center: coords ? coords : [55.650625, 37.62708],
-            zoom: zoom ? zoom : 10,
-            controls: ['zoomControl', 'fullscreenControl', 'typeSelector']
-        }, {
-            minZoom: 5,
-            maxZoom: 17
-        });
-
-        MAP.map.behaviors.disable('scrollZoom');
-        MAP.map.events.add('boundschange', MAP.getNewDataOnBounds);
-        MAP.getNewDataOnBounds();
-
-        // Инициализируем кластиризатор
-        MAP.clusterer = new ymaps.Clusterer({
-            groupByCoordinates: false,
-            clusterIconLayout: MAP.iContentLayout,
-            clusterIconOffset: [-22, -40],
-            clusterIconShape: MAP.getIconShape(),
-            gridSize: 128,
-            clusterOpenBalloonOnClick: false
-        });
-
-        MAP.clusterer.origCreateCluster = MAP.clusterer.createCluster;
-        MAP.clusterer.createCluster = function (e, n) {
-            var obj = MAP.clusterer.origCreateCluster(e, n),
-                props = obj.getGeoObjects()[0].properties.getAll();
-            return obj.properties.set({
-                geoid: props.geoid,
-                temp: props.temp,
-                weather_icon: props.weather_icon,
-                lat: props.lat,
-                lon: props.lon,
-                name: props.name,
-                balloon: props.balloon
-            }), obj
-        };
-
-        // Повесили обработчик на клик по "Подробнее" в метке
-        $('.map').on('click', '.map__link', function () {
-            $('.overflow').removeClass('hidden');
-            FORECAST.getForecastFromHash();
-        });
-    },
-
     /** Получаем метки для нового баундса */
     getNewDataOnBounds: function () {
         var params   = MAP.convertToParams( MAP.map.getBounds(), MAP.map.getZoom()),
@@ -242,5 +157,90 @@ var MAP = {
             'Влажность: ' + response.fact.humidity + '%<br/>' +
             'Давление: ' + response.fact.pressure + 'мм рт. ст.<br/>' +
             '<p><a class="map__link" href="#geoid=' + response.info.geoid + '">Подробнее</a></p>';
+    },
+
+    /** Инициализация лэйаутов, карты и кластеризатора */
+    init: function (coords, zoom) {
+        // Инициализируем лэйауты
+        MAP.iContentLayout = ymaps.templateLayoutFactory.createClass(
+            '<div class="baloon ymaps-placemark">' +
+                '<a class="link" href="#">' +
+                '<i class="icon icon_size_30 baloon__icon" data-width="30" style=' +
+                '"background-image: url(\'http://ekb.shri14.ru/icons/$[properties.weather_icon].svg\')">' +
+                '</i>' +
+                '<span class="baloon__temp">$[properties.temp]</span>' +
+                '</a>' +
+                '</div>'
+        );
+
+        MAP.hContentLayout = ymaps.templateLayoutFactory.createClass(
+            '<b class="hint">$[properties.name]</b>', {
+                /* Для того, чтобы хинт плавал над меткой */
+                getShape: function () {
+                    var el = this.getElement(),
+                        result = null;
+                    if (el) {
+                        var firstChild = el.firstChild;
+                        result = new ymaps.shape.Rectangle(
+                            new ymaps.geometry.pixel.Rectangle([
+                                [0, 0],
+                                [firstChild.offsetWidth, firstChild.offsetHeight]
+                            ])
+                        );
+                    }
+                    return result;
+                }
+            }
+        );
+
+        MAP.bContentLayout = ymaps.templateLayoutFactory.createClass(
+            '<div>$[properties.balloon]</div>'
+        );
+
+        // Основные объекты
+        // Инициализация карты
+        MAP.map = new ymaps.Map('map', {
+            center: coords ? coords : [55.650625, 37.62708],
+            zoom: zoom ? zoom : 10,
+            controls: ['zoomControl', 'fullscreenControl', 'typeSelector']
+        }, {
+            minZoom: 5,
+            maxZoom: 17
+        });
+
+        MAP.map.behaviors.disable('scrollZoom');
+        MAP.map.events.add('boundschange', MAP.getNewDataOnBounds);
+        MAP.getNewDataOnBounds();
+
+        // Инициализируем кластиризатор
+        MAP.clusterer = new ymaps.Clusterer({
+            groupByCoordinates: false,
+            clusterIconLayout: MAP.iContentLayout,
+            clusterIconOffset: [-22, -40],
+            clusterIconShape: MAP.getIconShape(),
+            gridSize: 128,
+            clusterOpenBalloonOnClick: false
+        });
+
+        MAP.clusterer.origCreateCluster = MAP.clusterer.createCluster;
+        MAP.clusterer.createCluster = function (e, n) {
+            var obj = MAP.clusterer.origCreateCluster(e, n),
+                props = obj.getGeoObjects()[0].properties.getAll();
+            return obj.properties.set({
+                geoid: props.geoid,
+                temp: props.temp,
+                weather_icon: props.weather_icon,
+                lat: props.lat,
+                lon: props.lon,
+                name: props.name,
+                balloon: props.balloon
+            }), obj
+        };
+
+        // Повесили обработчик на клик по "Подробнее" в метке
+        $('.map').on('click', '.map__link', function () {
+            $('.overflow').removeClass('hidden');
+            FORECAST.getForecastFromHash();
+        });
     }
 };
