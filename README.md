@@ -66,4 +66,5 @@ npm run-script codestyle
 npm run-script lint
 ```
 
-### Лицензия CC BY-NC-ND 4.0
+### Лицензия 
+CC BY-NC-ND 4.0
